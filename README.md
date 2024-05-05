@@ -1,13 +1,13 @@
 # RESTvsGRPC
 Evaluating Performance of REST vs. gRPC
 
-## dotnet run -p RestAPI.csproj -c Release
+## dotnet run --project  RestAPI/RestAPI.csproj -c Release
 Starts the ASP.NET MVC Core REST API
 
-## dotnet run -p GrpcAPI.csproj -c Release
+## dotnet run --project GrpcAPI/GrpcAPI.csproj -c Release
 Starts the GRPC Service
 
-## dotnet run -p RESTvsGRPC.csproj -c Release
+## dotnet run --project RESTvsGRPC/RESTvsGRPC.csproj -c Release
 Runs the benchmark on the above services
 
 # Benchmark for .NET Core 3.1
@@ -63,3 +63,30 @@ Intel Core i7-8650U CPU 1.90GHz (Kaby Lake R), 1 CPU, 8 logical and 4 physical c
 |    GrpcStreamLargePayloadAsync |            200 | 4,119.07 ms | 90.186 ms | 254.370 ms | 4,006.39 ms |
 | GrpcGetLargePayloadAsListAsync |            200 |   354.14 ms |  5.586 ms |   5.225 ms |   356.57 ms |
 |      GrpcPostLargePayloadAsync |            200 |   381.60 ms |  5.193 ms |   4.857 ms |   380.72 ms |
+
+# Benchmark for .NET 8.0
+
+``` ini
+BenchmarkDotNet v0.13.12, Windows 11 (10.0.22631.3447/23H2/2023Update/SunValley3)
+13th Gen Intel Core i9-13900HX, 1 CPU, 32 logical and 24 physical cores
+.NET SDK 8.0.300-preview.24203.14
+  [Host]     : .NET 8.0.4 (8.0.424.16909), X64 RyuJIT AVX2
+  DefaultJob : .NET 8.0.4 (8.0.424.16909), X64 RyuJIT AVX2
+```
+
+| Method                         | IterationCount | Mean         | Error      | StdDev      | Median       |
+|------------------------------- |--------------- |-------------:|-----------:|------------:|-------------:|
+| RestGetSmallPayloadAsync       | 100            |    13.310 ms |  0.2999 ms |   0.8701 ms |    13.208 ms |
+| RestGetLargePayloadAsync       | 100            |   434.190 ms | 45.4805 ms | 134.1004 ms |   432.488 ms |
+| RestPostLargePayloadAsync      | 100            |   270.883 ms |  5.3046 ms |   7.0815 ms |   268.655 ms |
+| GrpcGetSmallPayloadAsync       | 100            |     8.747 ms |  0.1749 ms |   0.4847 ms |     8.645 ms |
+| GrpcStreamLargePayloadAsync    | 100            |   338.670 ms |  8.3045 ms |  23.9604 ms |   335.338 ms |
+| GrpcGetLargePayloadAsListAsync | 100            |    52.648 ms |  1.0512 ms |   2.6756 ms |    52.278 ms |
+| GrpcPostLargePayloadAsync      | 100            |    55.675 ms |  1.1102 ms |   2.8259 ms |    55.500 ms |
+| RestGetSmallPayloadAsync       | 200            |    52.446 ms |  6.5391 ms |  19.2808 ms |    57.012 ms |
+| RestGetLargePayloadAsync       | 200            | 1,100.434 ms | 44.0127 ms | 129.7723 ms | 1,132.162 ms |
+| RestPostLargePayloadAsync      | 200            | 1,172.244 ms | 44.2585 ms | 127.6958 ms | 1,194.041 ms |
+| GrpcGetSmallPayloadAsync       | 200            |    36.235 ms |  2.9748 ms |   8.7713 ms |    39.237 ms |
+| GrpcStreamLargePayloadAsync    | 200            |   688.438 ms | 15.0834 ms |  43.7598 ms |   685.816 ms |
+| GrpcGetLargePayloadAsListAsync | 200            |   105.667 ms |  2.0911 ms |   4.7200 ms |   104.292 ms |
+| GrpcPostLargePayloadAsync      | 200            |   111.473 ms |  2.2247 ms |   5.7824 ms |   110.997 ms |
